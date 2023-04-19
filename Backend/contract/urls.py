@@ -2,11 +2,10 @@ from account import views
 from django.urls import include, path
 from rest_framework import routers
 
-app_name = "account"
+app_name = "contract"
 
 router = routers.SimpleRouter()
 router.register("users", views.UserViewSet, basename="users")
-router.register("vacations", views.VacationViewSet, basename="vacations")
 
 
 urlpatterns = [

@@ -2,8 +2,9 @@ from django.contrib.auth import get_user_model
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
+from .models import Vacation
 from .permissions import IsCEOOrIsAdministration
-from .serializers import UserSerializer
+from .serializers import UserSerializer, VacationSerializer
 
 
 class UserViewSet(ModelViewSet):
@@ -16,3 +17,8 @@ class UserViewSet(ModelViewSet):
         "personal_number",
         "phone_number",
     ]
+
+
+class VacationViewSet(ModelViewSet):
+    queryset = Vacation.objects.all()
+    serializer_class = VacationSerializer

@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 
+from .models import User, Vacation
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,3 +21,31 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data["password"] = make_password(validated_data.get("password"))
         return super(UserSerializer, self).create(validated_data)
+
+
+class VacationSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(
+        default=serializers.CurrentUserDefault(),
+        queryset=User.objects.all(),
+    )
+
+    class Meta:
+        model = Vacation
+        fields = "__all__"
+        extra_kwargs = {
+            "from_hour": {"required": False},
+            "untill_hour": {"required": False},
+        }
+
+    def validate(self, data):
+        data_dict = dict(data)
+        vacation_type = data_dict.get("vacation_type")
+        if vacation_type == "Hourly" and data_dict.get("from_hour") == None:
+            raise serializers.ValidationError(
+                {"from_hour": ["ساعت شروع مرخصی باید وارد شود"]}
+            )
+        if vacation_type == "Hourly" and data_dict.get("untill_hour") == None:
+            raise serializers.ValidationError(
+                {"untill_hour": ["ساعت پایان مرخصی باید وارد شود"]}
+            )
+        return data
