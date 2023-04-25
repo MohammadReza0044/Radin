@@ -15,6 +15,7 @@ class User(AbstractUser):
     is_Employee = models.BooleanField(default=True, null=True)
     is_Administration_Manager = models.BooleanField(default=False, null=True)
     is_CEO = models.BooleanField(default=False, null=True)
+    picture = models.ImageField(upload_to="users/image", null=True)
 
     class Meta:
         db_table = "User"

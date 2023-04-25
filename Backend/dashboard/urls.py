@@ -6,6 +6,9 @@ app_name = "dashboard"
 
 router = routers.SimpleRouter()
 router.register("to-do", views.ToDoListSetView, basename="to-do")
+router.register(
+    "manager-message", views.ManagerMessageSetView, basename="manager-message"
+)
 
 
 urlpatterns = [
