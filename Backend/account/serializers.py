@@ -49,3 +49,16 @@ class VacationSerializer(serializers.ModelSerializer):
                 {"untill_hour": ["ساعت پایان مرخصی باید وارد شود"]}
             )
         return data
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = (
+            "picture",
+            "personal_number",
+            "first_name",
+            "last_name",
+            "job_position",
+            "job_description",
+        )

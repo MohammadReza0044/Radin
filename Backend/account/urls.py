@@ -11,4 +11,5 @@ router.register("vacations", views.VacationViewSet, basename="vacations")
 
 urlpatterns = [
     path("", include(router.urls)),
+    path("profile/", views.Profile.as_view(), name="profile"),
 ]
