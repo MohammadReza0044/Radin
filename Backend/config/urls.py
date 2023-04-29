@@ -23,7 +23,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/rest-auth/", include("dj_rest_auth.urls")),
     path("api/account/", include("account.urls")),
-    path("api/contract", include("contract.urls")),
+    path("api/", include("contract.urls")),
     path("api/dashboard/", include("dashboard.urls")),
 ]
 
