@@ -61,10 +61,12 @@ class Contract(BaseClass):
     phone_number = models.IntegerField()
     address = models.CharField(max_length=255)
     receipt = models.ManyToManyField(Receipt, related_name="receipt")
-    contract_number = models.IntegerField()
+    contract_number = models.IntegerField(unique=True)
     car_number = models.IntegerField()
     contract_type = models.CharField(max_length=50, choices=CONTRACT_TYPE_CHOICES)
-    car_delivery = models.CharField(max_length=50, choices=CAR_DELIVERY_CHOICES)
+    car_delivery = models.CharField(
+        max_length=50, choices=CAR_DELIVERY_CHOICES, null=True
+    )
     day_of_delivery = models.IntegerField(null=True)
     month_of_delivery = models.DateField(null=True)
     month_of_commission = models.DateField(null=True)
