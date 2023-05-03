@@ -21,3 +21,9 @@ class ReceiptViewSet(ModelViewSet):
 class ContractViewSet(ModelViewSet):
     queryset = Contract.objects.all()
     serializer_class = ContractSerializer
+    search_fields = [
+        "national_code",
+        "contract_number",
+        "contract_type",
+        "car_name",
+    ]

@@ -44,18 +44,18 @@ class Receipt(BaseClass):
 
 class Contract(BaseClass):
     CONTRACT_TYPE_CHOICES = (
-        ("SALE", "فروش"),
-        ("COMMISSION", "حق العملکاری"),
+        ("فروش", "فروش"),
+        ("حق العملکاری", "حق العملکاری"),
     )
     CAR_DELIVERY_CHOICES = (
-        ("DAILY", "روزانه"),
-        ("MONTHLY", "ماهانه"),
+        ("روزانه", "روزانه"),
+        ("ماهانه", "ماهانه"),
     )
     STATUS_CHOICES = (
-        ("DOING", "در حال انجام"),
-        ("DONE", "اتمام قرارداد"),
-        ("DELAY", "تاخیر قرارداد"),
-        ("EXTENSION", "تمدید قرارداد"),
+        ("در حال انجام", "در حال انجام"),
+        ("اتمام قرارداد", "اتمام قرارداد"),
+        ("تاخیر قرارداد", "تاخیر قرارداد"),
+        ("تمدید قرارداد", "تمدید قرارداد"),
     )
     father_name = models.CharField(max_length=100)
     phone_number = models.IntegerField()
@@ -91,6 +91,3 @@ class Photo(models.Model):
 
     class Meta:
         db_table = "Photo"
-
-    def __str__(self):
-        return self.contract

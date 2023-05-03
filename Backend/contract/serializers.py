@@ -1,3 +1,5 @@
+import os
+
 from rest_framework import serializers
 
 from .models import Contract, ContractType, Photo, Receipt
@@ -49,27 +51,42 @@ class ContractSerializer(serializers.ModelSerializer):
         contract.receipt.set(receipts)
         return contract
 
+    def clear_existing_images(self, instance):
+        old_images = Photo.objects.filter(contract_id=instance.id)
+        for i in old_images:
+            i.delete()
+
+    def update(self, instance, validated_data):
+        uploaded_images = validated_data.pop("uploaded_images", None)
+        if uploaded_images:
+            self.clear_existing_images(instance)
+            contract_image_model_instance = [
+                Photo(contract=instance, image=image) for image in uploaded_images
+            ]
+            Photo.objects.bulk_create(contract_image_model_instance)
+        return super().update(instance, validated_data)
+
     def validate(self, data):
         data_dict = dict(data)
         contract_type = data_dict.get("contract_type")
         car_delivery = data_dict.get("car_delivery")
-        if contract_type == "SALE" and data_dict.get("car_delivery") == None:
+        if contract_type == "فروش" and data_dict.get("car_delivery") == None:
             raise serializers.ValidationError(
                 {"car_delivery": ["نوع تحویل باید مشخص شود"]}
             )
 
         if (
-            contract_type == "COMMISSION"
+            contract_type == "حق العملکاری"
             and data_dict.get("month_of_commission") == None
         ):
             raise serializers.ValidationError(
                 {"month_of_commission": ["ماه تحویل باید وارد شود"]}
             )
-        if car_delivery == "DAILY" and data_dict.get("day_of_delivery") == None:
+        if car_delivery == "روزانه" and data_dict.get("day_of_delivery") == None:
             raise serializers.ValidationError(
                 {"day_of_delivery": ["تعداد روز تحویل باید مشخص شود"]}
             )
-        if car_delivery == "MONTHLY" and data_dict.get("month_of_delivery") == None:
+        if car_delivery == "ماهانه" and data_dict.get("month_of_delivery") == None:
             raise serializers.ValidationError(
                 {"month_of_delivery": ["تاریخ تحویل باید مشخص شود"]}
             )
