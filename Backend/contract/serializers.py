@@ -1,3 +1,5 @@
+import os
+
 from rest_framework import serializers
 
 from .models import Contract, ContractType, Photo, Receipt
@@ -51,8 +53,11 @@ class ContractSerializer(serializers.ModelSerializer):
 
     def clear_existing_images(self, instance):
         old_images = Photo.objects.filter(contract_id=instance.id)
+
         for i in old_images:
+            path = str(i.image.path)
             i.delete()
+            os.remove(path)
 
     def update(self, instance, validated_data):
         uploaded_images = validated_data.pop("uploaded_images", None)
