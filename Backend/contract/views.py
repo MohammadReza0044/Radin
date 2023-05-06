@@ -1,21 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Contract, ContractType, Photo, Receipt
-from .serializers import ContractSerializer, ContractTypeSerializer, ReceiptSerializer
-
-
-class ContractTypeViewSet(ModelViewSet):
-    queryset = ContractType.objects.all()
-    serializer_class = ContractTypeSerializer
-
-
-class ReceiptViewSet(ModelViewSet):
-    queryset = Receipt.objects.all()
-    serializer_class = ReceiptSerializer
-    search_fields = [
-        "first_name",
-        "last_name",
-    ]
+from .models import Contract
+from .serializers import ContractSerializer
 
 
 class ContractViewSet(ModelViewSet):
@@ -25,5 +11,8 @@ class ContractViewSet(ModelViewSet):
         "national_code",
         "contract_number",
         "contract_type",
-        "car_name",
+        "car_type",
+    ]
+    filterset_fields = [
+        "status",
     ]

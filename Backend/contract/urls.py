@@ -5,9 +5,7 @@ from rest_framework import routers
 app_name = "contract"
 
 router = routers.SimpleRouter()
-router.register("contract-type", views.ContractTypeViewSet, basename="contract-type")
-router.register("receipt", views.ReceiptViewSet, basename="receipt")
-router.register("contract", views.ContractViewSet, basename="contract")
+router.register("contracts", views.ContractViewSet, basename="contract")
 
 
 urlpatterns = [
