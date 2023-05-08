@@ -17,7 +17,7 @@ class ToDoListSetView(ModelViewSet):
 
 
 class ManagerMessageSetView(ModelViewSet):
-    queryset = ManagerMessage.objects.all()
+    queryset = ManagerMessage.objects.all()[:1]
     serializer_class = ManagerMessageSerializer
 
     def get_permissions(self):
