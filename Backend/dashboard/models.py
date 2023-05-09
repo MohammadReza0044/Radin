@@ -56,8 +56,7 @@ class WorkingMonth(models.Model):
 
 class WorkingDay(models.Model):
     month = models.ForeignKey(
-        WorkingMonth,
-        on_delete=models.CASCADE,
+        WorkingMonth, on_delete=models.CASCADE, related_name="working_days"
     )
     working_day = models.DateField()
 

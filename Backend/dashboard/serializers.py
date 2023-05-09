@@ -28,7 +28,7 @@ class WorkingDaySerializer(serializers.ModelSerializer):
 
 
 class WorkingMonthSerializer(serializers.ModelSerializer):
-    working_day = WorkingDaySerializer(many=True, read_only=True)
+    working_days = WorkingDaySerializer(many=True, read_only=True)
     days = serializers.ListField(
         child=serializers.DateField(),
         write_only=True,
