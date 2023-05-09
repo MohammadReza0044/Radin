@@ -28,7 +28,13 @@ class ToDoList(models.Model):
 
 
 class ManagerMessage(models.Model):
-    text = models.TextField()
+    title = models.CharField(max_length=255, null=True)
+    text = models.CharField(max_length=255, null=True)
+    image = models.ImageField(upload_to="manager message/images", null=True)
+    video = models.FileField(
+        upload_to="manager message/video",
+        null=True,
+    )
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
