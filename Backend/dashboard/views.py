@@ -2,9 +2,13 @@ from account.permissions import IsCEOOrIsAdministration
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
-from .models import ManagerMessage, ToDoList
+from .models import ManagerMessage, ToDoList, WorkingMonth
 from .permissions import IsUser
-from .serializers import ManagerMessageSerializer, ToDoListSerializer
+from .serializers import (
+    ManagerMessageSerializer,
+    ToDoListSerializer,
+    WorkingMonthSerializer,
+)
 
 
 class ToDoListSetView(ModelViewSet):
@@ -26,3 +30,8 @@ class ManagerMessageSetView(ModelViewSet):
         else:
             permission_classes = [IsAuthenticated, IsCEOOrIsAdministration]
         return [permission() for permission in permission_classes]
+
+
+class WorkingMonthSetView(ModelViewSet):
+    queryset = WorkingMonth.objects.all()
+    serializer_class = WorkingMonthSerializer

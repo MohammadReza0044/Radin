@@ -43,4 +43,23 @@ class ManagerMessage(models.Model):
         get_latest_by = "created"
 
     def __str__(self):
-        return self.text
+        return self.title
+
+
+class WorkingMonth(models.Model):
+    title = models.CharField(max_length=255, null=True)
+    working_month = models.DateField()
+
+    class Meta:
+        db_table = "Working Month"
+
+
+class WorkingDay(models.Model):
+    month = models.ForeignKey(
+        WorkingMonth,
+        on_delete=models.CASCADE,
+    )
+    working_day = models.DateField()
+
+    class Meta:
+        db_table = "Working Day"

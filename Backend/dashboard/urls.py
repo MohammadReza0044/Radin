@@ -9,6 +9,7 @@ router.register("to-do", views.ToDoListSetView, basename="to-do")
 router.register(
     "manager-message", views.ManagerMessageSetView, basename="manager-message"
 )
+router.register("working-month", views.WorkingMonthSetView, basename="working-month")
 
 
 urlpatterns = [
