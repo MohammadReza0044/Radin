@@ -2,18 +2,13 @@ import os
 
 from rest_framework import serializers
 
-from .models import Contract, Photo
-
-# class ContractTypeSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = ContractType
-#         fields = "__all__"
+from .models import Contract, Photo, Receipt
 
 
-# class ReceiptSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Receipt
-#         fields = "__all__"
+class ReceiptSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Receipt
+        fields = "__all__"
 
 
 class PhotoSerializer(serializers.ModelSerializer):
@@ -36,19 +31,19 @@ class ContractSerializer(serializers.ModelSerializer):
         fields = "__all__"
         extra_kwargs = {
             "uploaded_images": {"required": False},
-            # "car_delivery": {"required": False},
-            # "day_of_delivery": {"required": False},
-            # "month_of_delivery": {"required": False},
-            # "month_of_commission": {"required": False},
+            "car_delivery": {"required": False},
+            "day_of_delivery": {"required": False},
+            "month_of_delivery": {"required": False},
+            "month_of_commission": {"required": False},
         }
 
     def create(self, validated_data):
         uploaded_images = validated_data.pop("uploaded_images")
-        # receipts = validated_data.pop("receipt")
+        receipts = validated_data.pop("receipt")
         contract = Contract.objects.create(**validated_data)
         for image in uploaded_images:
             newcontract_image = Photo.objects.create(contract=contract, image=image)
-        # contract.receipt.set(receipts)
+        contract.receipt.set(receipts)
         return contract
 
     def clear_existing_images(self, instance):
@@ -69,7 +64,7 @@ class ContractSerializer(serializers.ModelSerializer):
             Photo.objects.bulk_create(contract_image_model_instance)
         return super().update(instance, validated_data)
 
-        # def validate(self, data):
+    def validate(self, data):
         data_dict = dict(data)
         contract_type = data_dict.get("contract_type")
         car_delivery = data_dict.get("car_delivery")

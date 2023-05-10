@@ -5,6 +5,7 @@ from rest_framework import routers
 app_name = "contract"
 
 router = routers.SimpleRouter()
+router.register("receipts", views.ReceiptViewSet, basename="receipts")
 router.register("contracts", views.ContractViewSet, basename="contract")
 
 

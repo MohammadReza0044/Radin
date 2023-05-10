@@ -1,7 +1,12 @@
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Contract
-from .serializers import ContractSerializer
+from .models import Contract, Receipt
+from .serializers import ContractSerializer, ReceiptSerializer
+
+
+class ReceiptViewSet(ModelViewSet):
+    queryset = Receipt.objects.all()
+    serializer_class = ReceiptSerializer
 
 
 class ContractViewSet(ModelViewSet):
